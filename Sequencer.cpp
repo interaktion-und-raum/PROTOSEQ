@@ -501,7 +501,8 @@ seq::seq(int id, SUBDIV subdiv,  int steps, int channel) : _id(id), _stopped(tru
     if(steps <= MAX_STEPS) setend(steps-1);
     else setend(MAX_STEPS);
     for(int i = 0; i < MAX_STEPS; i++) {
-        _notes[i] = 36 + 3 * i;
+//        _notes[i] = 36 + 3 * i;
+        _notes[i] = 0;
         _velocity[i] = 127;
     }
     setinternal(true);
@@ -523,7 +524,8 @@ seq::seq(int id, SUBDIV subdiv,  int steps, SEQ_LOOP_TYPE loop) : _id(id), _stop
     if(steps <= MAX_STEPS) setend(steps-1);
     else setend(MAX_STEPS);
     for(int i = 0; i < MAX_STEPS; i++) {
-        _notes[i] = 36 + 3 * i;
+        //        _notes[i] = 36 + 3 * i;
+        _notes[i] = 0;
         _velocity[i] = 127;
     }
     setinternal(true);
@@ -549,7 +551,8 @@ seq::seq(int id, SUBDIV subdiv,  int steps, SEQ_LOOP_TYPE loop, bool reverse) : 
     if(steps <= MAX_STEPS) setend(steps-1);
     else setend(MAX_STEPS);
     for(int i = 0; i < MAX_STEPS; i++) {
-        _notes[i] = 36 + 3 * i;
+        //        _notes[i] = 36 + 3 * i;
+        _notes[i] = 0;
         _velocity[i] = 127;
     }
     setinternal(true);

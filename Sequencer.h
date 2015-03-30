@@ -23,10 +23,8 @@
 
 #pragma once
 
-#define MAX_SEQ 8
-#define MAX_STEPS 16
-#define INSTR_SEQ 4
-#define ISEQ_NBR_STEPS 32
+#define MAX_SEQ 128
+#define MAX_STEPS 128
 
 
 #define TICKS_PER_QUARTER_NOTE 24 //
