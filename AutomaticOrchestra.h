@@ -9,14 +9,17 @@
 #include "Sequencer.h"
 #include "BodyseqSynth.h"
 #include "MacAddress.h"
+#include "OrchestraMemberConfig.h"
 
 class AutomaticOrchestra {
 public:
 	AutomaticOrchestra();
-	void init(int pMidiChannel, bool pIsKlockmeister, func_cb pCallback);
+	void init(func_cb pCallback);
 	void update();
 	void triggerSequenceCallback();
 private:
+	orchestra_member_t* mOrchestraMembers;
+	orchestra_member_t* mConfig = NULL;
 	String mMacAddress;
 	int mSequenceID;
 };

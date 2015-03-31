@@ -29,7 +29,7 @@ void setup() {
 	Serial.println("setup()");
 
 	//TODO implement logic to distinguish individual devices and their corresponding initialization values
-	ao -> init(1, true, &sequenceCallback);
+	ao -> init(&sequenceCallback);
 }
 
 void loop() {
