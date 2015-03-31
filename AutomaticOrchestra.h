@@ -8,6 +8,7 @@
 #include <spi4teensy3.h>
 #include "Sequencer.h"
 #include "BodyseqSynth.h"
+#include "MacAddress.h"
 
 class AutomaticOrchestra {
 public:
@@ -16,6 +17,7 @@ public:
 	void update();
 	void triggerSequenceCallback();
 private:
+	String mMacAddress;
 	int mSequenceID;
 };
 

@@ -10,6 +10,7 @@
 #include "AutomaticOrchestra.h"
 
 AutomaticOrchestra::AutomaticOrchestra() {
+	mMacAddress = MacAddress::get();
 }
 
 void AutomaticOrchestra::init(int pMidiChannel, bool pIsKlockmeister, func_cb pCallback){
@@ -17,6 +18,8 @@ void AutomaticOrchestra::init(int pMidiChannel, bool pIsKlockmeister, func_cb pC
 	Serial.print(pMidiChannel);
 	Serial.print(" -- klock meister: ");
 	Serial.println(pIsKlockmeister);
+	
+	Serial.println(mMacAddress);
 
 	Music.init();
 	Music.enableEnvelope1();
@@ -56,5 +59,5 @@ void AutomaticOrchestra::update() {
 }
 
 void AutomaticOrchestra::triggerSequenceCallback(){
-	Serial.println("AutomaticOrchestra::triggerSequenceCallback()");
+	//Serial.println("AutomaticOrchestra::triggerSequenceCallback()");
 }
