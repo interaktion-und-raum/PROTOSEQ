@@ -2,10 +2,10 @@
  * @file    AutomaticOrchestra.ino
  * @author  David Beermann
  * @date    03/31/2015
- * @version 1.0
+ * @version 0.1
  * 
  * @brief This Arduino project should be the starting point for any implementation of
- * the Automatic Orchestra installation.
+ * the Automatic Orchestra installation at Resonate 2015.
  */
 
 // Libraries originally intended to be stored in AutomaticOrchestra class.
@@ -21,15 +21,24 @@ AutomaticOrchestra* ao = new AutomaticOrchestra();
 
 
 void setup() {
-  // wait for 'whatever' happens when including the libraries.
-  // without delay no serial output send in the setup() method will be printed.
-  delay(1000);
+	// wait for 'whatever' happens when including the libraries.
+	// without delay no serial output send in the setup() method will be printed.
+	delay(1000);
 
-  Serial.begin(9600);
-  Serial.println("setup()");
-  
-  ao->init();
+	Serial.begin(9600);
+	Serial.println("setup()");
+
+	//TODO implement logic to distinguish individual devices and their corresponding initialization values
+	ao -> init(1, true, &sequenceCallback);
 }
 
 void loop() {
+	ao -> update();
+}
+
+// this function was the only way I could find to implement the callback function for the sequence.
+// within the AutomaticOrchestra class it let always to an error caused by the 'method signature':
+// error: no matching function for call to 'MSequencer::newSequence(SUBDIV, void (AutomaticOrchestra::*)())'
+void sequenceCallback(){
+	ao -> triggerSequenceCallback();
 }
