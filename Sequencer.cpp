@@ -58,10 +58,8 @@ void MSequencer::update()
         seq* s = _sequences[i];
         if(s == NULL || s->_stopped) continue;
         if(clockTick >= s -> step) {
-            if(s -> _steps) {
-//                Serial.println("_steps");
+                if(s -> _steps) {
                 s -> trigger();
-//                Serial.println("trigger");
             } else {
                 s->_callback();
             }
@@ -215,8 +213,10 @@ bool MSequencer::stopSequence(int index)
 bool MSequencer::startSequence(int index)
 {
     if(index >= 0 && index < MAX_SEQ && _sequences[index] != NULL) {
+
         _sequences[index] -> _stopped = false;
         _sequences[index] -> step = 0;
+
         return true;
     }
     return false;
@@ -486,6 +486,7 @@ seq::seq(int id, SUBDIV subdiv, func_cb cb) : _id(id), _stopped(true)
 {
     setsubdiv(subdiv);
     callback(cb);
+    setsteps(0);
 }
 
 

@@ -481,12 +481,14 @@ void MMusic::getPreset(uint8_t p)
 //		Serial.print("GETTING PRESET NUMBER : ");
 //		Serial.println(p);
 		for(uint8_t i=2; i<128; i++) {
+            if(i >= 80 && i < 100) continue;
 			instrument[i] = userPresets[p][i];
 			Midi.controller(Midi.midiChannel, i, instrument[i]);
 //			Serial.println(userPresets[p][i]);
 		}
 	} else {
 		for(uint8_t i=2; i<128; i++) {
+            if(i >= 80 && i < 100) continue;
 			instrument[i] = programPresets[(p-MAX_PRESETS)*PRESET_SIZE + i];
 			Midi.controller(Midi.midiChannel, i, instrument[i]);
 			//			Serial.println(userPresets[p][i]);
@@ -2361,6 +2363,9 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
             break;
         case SEQ_SEQUENCE:
             Sequencer.setSelectedSequence(value);
+            break;
+        case SEQ_POSITION:
+            Sequencer.setSelectedPosition(value);
             break;
         default:
 			break;

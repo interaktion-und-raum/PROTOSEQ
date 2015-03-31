@@ -195,8 +195,8 @@
 #define FREQUENCY3 39
 
 #define SONG_PART 40
-#define SONG_KEY 41
-#define SONG_BPM 42 // not needed
+#define SONG_KEY 41     // essentially offset of MIDI note number
+#define SONG_SCALE 42   // minor, major, etc
 
 #define CUTOFF_MOD_AMOUNT 70
 #define CUTOFF_MOD_DIRECTION 71
@@ -215,8 +215,9 @@
 #define SEQ_CLOCK_OUT 83
 #define SEQ_BPM 84
 #define SEQ_SEQUENCE 85
-#define SEQ_POSITION 86
-#define SEQ_VALUE 87
+#define SEQ_TYPE 86 // note, vel, controller, value
+#define SEQ_POSITION 87
+#define SEQ_VALUE 88
 #define SEQ_INTERNAL 88
 #define SEQ_EXTERNAL 89
 #define SEQ_STEPS 90
@@ -224,10 +225,11 @@
 #define SEQ_END 92
 #define SEQ_SUBDIV 93
 #define SEQ_LOOP 94 // NO_LOOP, LOOP [, PINGPONG, BACKWARDS, STEP]
-#define SEQ_START 95
-#define SEQ_STOP 96
-#define SEQ_CONTINUE 97
-#define SEQ_JUMP_POSITION 98
+#define SEQ_REVERSE 95
+#define SEQ_START 96
+#define SEQ_STOP 97
+#define SEQ_CONTINUE 98
+#define SEQ_JUMP_POSITION 99
 
 
 //#define CFO_COMMAND 90
