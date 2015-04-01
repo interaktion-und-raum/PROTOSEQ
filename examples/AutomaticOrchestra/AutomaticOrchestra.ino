@@ -27,6 +27,7 @@ void setup() {
 
 	Serial.begin(9600);
 	Serial.println("setup()");
+	Serial.println(usbMIDI);
 
 	//TODO implement logic to distinguish individual devices and their corresponding initialization values
 	ao -> init(&sequenceCallback);
@@ -41,4 +42,16 @@ void loop() {
 // error: no matching function for call to 'MSequencer::newSequence(SUBDIV, void (AutomaticOrchestra::*)())'
 void sequenceCallback(){
 	ao -> triggerSequenceCallback();
+}
+
+void OnNoteOn(byte channel, byte note, byte velocity) {
+}
+
+void OnNoteOff(byte channel, byte note, byte velocity) {
+}
+
+void OnControlChange(byte channel, byte control, byte value) {
+}
+
+void RealTimeSystem(byte realtimebyte) {
 }
