@@ -1819,10 +1819,18 @@ void MMidi::setControllerCallback( void (*pControllerCallback)(uint8_t channel, 
 
 void MMidi::setChannel(uint8_t channel)
 {
+	/*
     if(channel < 1 || channel > 16) {
         Serial.println("MIDI channel must be set to a number between 1 and 16");
     }
     else midiChannel = channel - 1;
+    */
+
+    // Refactoring starting MIDI channels from 0
+    if(channel < 0 || channel > 15) {
+        Serial.println("MIDI channel must be set to a number between 0 and 15");
+    }
+    else midiChannel = channel;
 }
 
 uint8_t MMidi::getChannel() {
@@ -1968,13 +1976,16 @@ bool MMidi::getMidiClockThru()
 
 void MMidi::checkSerialMidi()
 {
-    while(MIDI_SERIAL.available()) {
-        
+	// link to MIDI messages table:
+	// http://www.midi.org/techspecs/midimessages.php
+
+    while( MIDI_SERIAL.available() ) {
 		data = MIDI_SERIAL.read();
 		
+		// check whether it's a clocking message
         if(data >= 0xF8) {
             midiRealTimeHandler(data);
-//            RealTimeSystem(byte(data));
+			//RealTimeSystem(byte(data));
             continue;
         }
         
@@ -1985,7 +1996,15 @@ void MMidi::checkSerialMidi()
 //			midiRead = false;								// midiChannel, don't read this or any following bytes.
 //		}
 		
-        if(data >= 0x80 && data < 0xF0) {       // check if incoming byte is a status byte (above 127)but less than sysEx (0xF0)
+		// check whether the the first signal is one of the following messages:
+		// 0x80 - 0x8F => Note off messages
+		// 0x90 - 0x9F => Note on messages
+		// 0xA0 - 0xAF => Polyphonic Aftertouch messages
+		// 0xB0 - 0xBF => Control/Mode Change messages
+		// 0xC0 - 0xCF => Program Change messages
+		// 0xD0 - 0xDF => Channel Aftertouch messages
+		// 0xE0 - 0xEF => Pitch Bend Change messages
+		if(data >= 0x80 && data <= 0xEF) {       // check if incoming byte is a status byte (above 127)but less than sysEx (0xF0)
             if((data & 0x0F) == midiChannel) {  // if it is, check if it is the right MIDI channel
                 midiBufferIndex = 0;
                 midiRead = true;
@@ -1993,7 +2012,8 @@ void MMidi::checkSerialMidi()
                 midiRead = false;
             } else {}                           // if it is below 128 just continue
         }
-        
+
+        // If the previous condition is met buffer the next two bytes.
         if(midiRead) {
 			midiBuffer[midiBufferIndex] = data;
 			midiBufferIndex++;
@@ -2011,7 +2031,11 @@ void MMidi::checkSerialMidi()
 
 
 void MMidi::midiRealTimeHandler(uint8_t data) {
-    
+    //Serial.print("MMidi::midiRealTimeHandler() -- getMidiThru(): ");
+	//Serial.print(getMidiThru());
+	//Serial.print(" -- getMidiIn(): ");
+	//Serial.println(getMidiIn());
+
     if(getMidiClockThru()) {
         MIDI_SERIAL.write(data);
     }
@@ -2074,6 +2098,10 @@ void MMidi::stop()
 
 
 void MMidi::midiHandler() {
+	//Serial.print("MMidi::midiHandler() -- getMidiThru(): ");
+	//Serial.print(getMidiThru());
+	//Serial.print(" -- getMidiIn(): ");
+	//Serial.println(getMidiIn());
 
     if(getMidiThru()) {
         MIDI_SERIAL.write(midiBuffer[0]);
@@ -2133,8 +2161,8 @@ void MMidi::midiHandler() {
 
 
 void MMidi::noteOff(uint8_t channel, uint8_t note, uint8_t vel) {
-//    Serial.print("NoteOff received on channel: ");
-//    Serial.println(channel + 1, HEX);
+    //Serial.print("NoteOff received on channel: ");
+    //Serial.println(channel + 1, HEX);
 	if( p_noteOffCallback != NULL ) {
 		(*p_noteOffCallback)( channel, note, vel );
 	} else {
@@ -2145,8 +2173,8 @@ void MMidi::noteOff(uint8_t channel, uint8_t note, uint8_t vel) {
 
 
 void MMidi::noteOn(uint8_t channel, uint8_t note, uint8_t vel) {
-//    Serial.print("NoteOn received on channel: ");
-//    Serial.println(channel + 1, HEX);
+    //Serial.print("NoteOn received on channel: ");
+    //Serial.println(channel + 1, HEX);
 	if( p_noteOnCallback != NULL ) {
 		(*p_noteOnCallback)( channel, note, vel );
 	} else {
