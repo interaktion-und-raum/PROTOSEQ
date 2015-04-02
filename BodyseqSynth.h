@@ -674,11 +674,17 @@ public:
 
     void setClockTickCallback( void (*pClockClickCallback)(void) );
     void setClockStartCallback( void (*pClockStartCallback)(void) );
+    void setNoteOnCallback( void (*pNoteOnCallback)(uint8_t channel, uint8_t note, uint8_t vel) );
+    void setNoteOffCallback( void (*pNoteOffCallback)(uint8_t channel, uint8_t note, uint8_t vel) );
+    void setControllerCallback( void (*pControllerCallback)(uint8_t channel, uint8_t number, uint8_t value) );
     
 private:
 
 	void (*p_clockClickCallback)(void) = NULL;
 	void (*p_clockStartCallback)(void) = NULL;
+	void (*p_noteOnCallback)(uint8_t channel, uint8_t note, uint8_t vel) = NULL;
+	void (*p_noteOffCallback)(uint8_t channel, uint8_t note, uint8_t vel) = NULL;
+	void (*p_controllerCallback)(uint8_t channel, uint8_t number, uint8_t value) = NULL;
 	
 	// MIDI
 	uint8_t data;

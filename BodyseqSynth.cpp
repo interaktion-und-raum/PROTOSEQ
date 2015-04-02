@@ -1805,6 +1805,18 @@ void MMidi::setClockStartCallback( void (*pClockStartCallback)(void) ){
 	p_clockStartCallback = pClockStartCallback;
 }
 
+void MMidi::setNoteOnCallback( void (*pNoteOnCallback)(uint8_t channel, uint8_t note, uint8_t vel) ) {
+	p_noteOnCallback = pNoteOnCallback;
+}
+
+void MMidi::setNoteOffCallback( void (*pNoteOffCallback)(uint8_t channel, uint8_t note, uint8_t vel) ) {
+	p_noteOffCallback = pNoteOffCallback;
+}
+
+void MMidi::setControllerCallback( void (*pControllerCallback)(uint8_t channel, uint8_t number, uint8_t value) ) {
+	p_controllerCallback = pControllerCallback;
+}
+
 void MMidi::setChannel(uint8_t channel)
 {
     if(channel < 1 || channel > 16) {
@@ -2123,15 +2135,23 @@ void MMidi::midiHandler() {
 void MMidi::noteOff(uint8_t channel, uint8_t note, uint8_t vel) {
 //    Serial.print("NoteOff received on channel: ");
 //    Serial.println(channel + 1, HEX);
-
-    Music.noteOff(note);
+	if( p_noteOffCallback != NULL ) {
+		(*p_noteOffCallback)( channel, note, vel );
+	} else {
+		Music.noteOff(note);
+	}
+    
 }
 
 
 void MMidi::noteOn(uint8_t channel, uint8_t note, uint8_t vel) {
 //    Serial.print("NoteOn received on channel: ");
 //    Serial.println(channel + 1, HEX);
-    Music.noteOn(note, vel);
+	if( p_noteOnCallback != NULL ) {
+		(*p_noteOnCallback)( channel, note, vel );
+	} else {
+		Music.noteOn(note, vel);
+	}
 }
 
 
@@ -2144,6 +2164,10 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 	
 	if(value > 127) value = 127;
 	instrument[number] = value;
+
+	if( p_controllerCallback != NULL ) {
+		(*p_controllerCallback)( channel, number, value );
+	}
 	
 	switch(number) {
 		case IS_12_BIT:
