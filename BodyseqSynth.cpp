@@ -1797,6 +1797,10 @@ void MMidi::init()
     Serial.println("MIDI intialised on channel 1. Use Midi.setChannel(channel) to set to other channel");
 }
 
+void MMidi::setClockTickCallback( void (*pClockClickCallback)(void) ){
+	p_clockClickCallback = pClockClickCallback;
+}
+
 
 void MMidi::setChannel(uint8_t channel)
 {
@@ -2024,7 +2028,11 @@ void MMidi::midiRealTimeHandler(uint8_t data) {
 
 void MMidi::clock()
 {
-        Sequencer.clock();
+	// quick hack to circumvent sequencer.
+	if(p_clockClickCallback != NULL){
+		(*p_clockClickCallback)();
+	}
+    Sequencer.clock();
 }
 
 

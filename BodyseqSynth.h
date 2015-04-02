@@ -671,9 +671,12 @@ public:
 
     void setMidiClockThru(bool t);
     bool getMidiClockThru();
-    
+
+    void setClockTickCallback( void (*pClockClickCallback)(void) );
     
 private:
+
+	void (*p_clockClickCallback)(void) = NULL;
 	
 	// MIDI
 	uint8_t data;
