@@ -1801,6 +1801,9 @@ void MMidi::setClockTickCallback( void (*pClockClickCallback)(void) ){
 	p_clockClickCallback = pClockClickCallback;
 }
 
+void MMidi::setClockStartCallback( void (*pClockStartCallback)(void) ){
+	p_clockStartCallback = pClockStartCallback;
+}
 
 void MMidi::setChannel(uint8_t channel)
 {
@@ -2038,7 +2041,11 @@ void MMidi::clock()
 
 void MMidi::start()
 {
-        Sequencer.start();
+	// quick hack to circumvent sequencer.
+	if(p_clockStartCallback != NULL){
+		(*p_clockStartCallback)();
+	}
+    Sequencer.start();
 }
 
 

@@ -673,10 +673,12 @@ public:
     bool getMidiClockThru();
 
     void setClockTickCallback( void (*pClockClickCallback)(void) );
+    void setClockStartCallback( void (*pClockStartCallback)(void) );
     
 private:
 
 	void (*p_clockClickCallback)(void) = NULL;
+	void (*p_clockStartCallback)(void) = NULL;
 	
 	// MIDI
 	uint8_t data;
