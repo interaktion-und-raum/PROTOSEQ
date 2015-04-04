@@ -101,9 +101,6 @@ uint16_t MCP4251::read(byte cmd_byte)
 	spi4teensy3::send(cmd_byte);
 	spi4teensy3::send(0xFF);
   ::digitalWrite(slave_select_pin, HIGH);
-  
-  Serial.println("+++ Warning @ Mcp4251 / MCP4251::read(byte cmd_byte) never returns a value although return type is non-void.");
-  return 0;
 //  return byte2uint16(high_byte, low_byte);
 }
 

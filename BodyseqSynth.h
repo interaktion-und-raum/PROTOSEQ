@@ -157,7 +157,7 @@
 #define CUTOFF 4
 #define ZERO_HZ_FM 5
 #define FM_OCTAVES 6
-#define RESONANCE 7
+#define RESONANCE_DECLARED_TWICE 7
 #define PORTAMENTO 8
 #define FILTER_TYPE 9
 
