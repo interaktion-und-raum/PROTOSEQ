@@ -765,7 +765,8 @@ void MMusic::init()
 //	spi_setup();
 
 	// filter setup
-	setCutoff(BIT_16);
+        setCutoff((uint16_t)BIT_16);
+//	setCutoff(BIT_16);
 	setResonance(BIT_16);
     setFilterType(0);
 	
@@ -1619,11 +1620,14 @@ void MMusic::noteOn(uint8_t note)
 
 
 void MMusic::noteOff(uint8_t note)
-{	
-	if(notePlayed = note) {
+{	    	
+        notePlayed = note;
+	if(notePlayed) {
+//	if(notePlayed = note) {
 		env1Stage = 4;
 		env2Stage = 4;
-	}    
+	}
+        //        Serial.println("+++ Warning @ BodySeqSynth / MMusic::noteOff(uint8_t note) uses flaky if-construct.");
 }
 
 

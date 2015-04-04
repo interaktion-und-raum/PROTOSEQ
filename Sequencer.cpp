@@ -251,7 +251,9 @@ int MSequencer::getbpm()
 bool MSequencer::setChannel(int index, int channel)
 {
     if(index >= 0 && index < MAX_SEQ && _sequences[index] != NULL) {
-        _sequences[index]->_channel;
+        Serial.println("+++ Warning in Sequencer / setChannel '_sequences[index]->_channel;' has no effect.");
+//        _sequences[index]->_channel;
+
 //        _sequences[index]->setchannel(channel);
         return true;
     }
