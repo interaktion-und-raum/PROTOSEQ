@@ -1622,7 +1622,7 @@ void MMusic::noteOn(uint8_t note)
 
 void MMusic::noteOff(uint8_t note)
 {	
-	if(notePlayed = note) {
+	if(notePlayed == note) {
 		env1Stage = 4;
 		env2Stage = 4;
 	}    
@@ -2362,10 +2362,19 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
             Sequencer.setbpm(60 + value);
             break;
         case SEQ_SEQUENCE:
-            Sequencer.setSelectedSequence(value);
+            Sequencer.selectSequence(value);
             break;
-        case SEQ_POSITION:
-            Sequencer.setSelectedPosition(value);
+        case SEQ_TYPE:
+            if(value == 1) Sequencer.selectSequenceType(1);
+            else if(value == 2) Sequencer.selectSequenceType(2);
+            else if(value == 3) Sequencer.selectSequenceType(3);
+            else Sequencer.selectSequenceType(0);
+            break;
+        case SEQ_INDEX:
+            Sequencer.selectIndex(value);
+            break;
+        case SEQ_VALUE:
+//            Sequencer.setValue(value);
             break;
         default:
 			break;

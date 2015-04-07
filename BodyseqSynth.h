@@ -157,7 +157,6 @@
 #define CUTOFF 4
 #define ZERO_HZ_FM 5
 #define FM_OCTAVES 6
-#define RESONANCE 7
 #define PORTAMENTO 8
 #define FILTER_TYPE 9
 
@@ -216,7 +215,7 @@
 #define SEQ_BPM 84
 #define SEQ_SEQUENCE 85
 #define SEQ_TYPE 86 // note, vel, controller, value
-#define SEQ_POSITION 87
+#define SEQ_INDEX 87
 #define SEQ_VALUE 88
 #define SEQ_INTERNAL 88
 #define SEQ_EXTERNAL 89

@@ -51,6 +51,13 @@ enum SUBDIV {
 //    NOTE_384 = (TICKS_PER_QUARTER_NOTE / 96)
 };
 
+enum SEQ_TYPE {
+    NOTE = 0,
+    VELOCITY = 1,
+    CCNUMBER = 2,
+    CCVALUE = 3
+};
+
 enum SEQ_LOOP_TYPE {
     ONCE = 0,
     LOOP = 1,
@@ -129,11 +136,26 @@ public:
     
     bool insertNotes(int index, int notes[], int numNotes, int newPosition);
     
-    int setSelectedSequence(int s);
+    bool selectSequence(int s);
     int getSelectedSequence();
 
-    bool setSelectPosition(int s);
-    int getSelectedPosition();
+    bool selectIndex(int i);
+    int getSelectedIndex();
+    
+    bool selectSequenceType(SEQ_TYPE type);
+    bool selectSequenceType(int type);
+    SEQ_TYPE getSelectedSequenceType();
+
+    bool setValue(int seq, SEQ_TYPE type, int index, int val);
+    bool setValue(int seq, int index, int val);
+    bool setValue(SEQ_TYPE type, int index, int val);
+    bool setValue(int index, int val);
+    bool setValue(int val);
+    int getValue(int seq, SEQ_TYPE type, int index);
+    int getValue(int seq, int index);
+    int getValue(SEQ_TYPE type, int index);
+    int getValue(int index);
+    int getValue();
     
 
 private:
@@ -146,8 +168,9 @@ private:
     unsigned long lastTime;
     unsigned long tickTime;
 
-    int selectedSequence;
-    int selectedPosition;
+    int _selectedSequence;
+    int _selectedIndex;
+    SEQ_TYPE _selectedSequenceType;
     
 
     

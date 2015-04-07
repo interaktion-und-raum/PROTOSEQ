@@ -29,6 +29,16 @@
 MSequencer Sequencer;
 
 
+
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+/////////////////////////////////////// SEQUENCER
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+
+
 void MSequencer::init(int bpm)
 {
     setbpm(bpm);
@@ -251,9 +261,10 @@ int MSequencer::getbpm()
 bool MSequencer::setChannel(int index, int channel)
 {
     if(index >= 0 && index < MAX_SEQ && _sequences[index] != NULL) {
-        _sequences[index]->_channel;
-//        _sequences[index]->setchannel(channel);
-        return true;
+        if(channel >=0 && channel < 16) {
+            _sequences[index]->_channel = channel;
+            return true;
+        }
     }
     return false;
 }
@@ -469,18 +480,103 @@ bool MSequencer::insertNotes(int index, int notes[], int numNotes, int newPositi
     return false;
 }
 
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+/////////////////////////////////////// UPDATE BELOW HERE
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
 
-int MSequencer::setSelectedSequence(int s)
+bool MSequencer::selectSequence(int s)
 {
-    if(s < 0) s = 0;
-    if(s > MAX_SEQ) s = MAX_SEQ - 1;
-    selectedSequence = s;
-    return selectedSequence;
+//    if(s < 0) s = 0;
+//    if(s > MAX_SEQ) s = MAX_SEQ - 1;
+    if(s >= 0 && s < MAX_SEQ) {
+        _selectedSequence = s;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+int MSequencer::getSelectedSequence()
+{
+    return _selectedSequence;
+}
+
+
+bool MSequencer::selectIndex(int i)
+{
+    if(i >= 0 && i < MAX_STEPS) {
+        _selectedIndex = i;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+int MSequencer::getSelectedIndex()
+{
+    return _selectedIndex;
+}
+
+
+bool MSequencer::setValue(int seq, int index, int val)
+{
+    if(seq >= 0 && seq < MAX_STEPS) {
+        if(index >= 0 && index < MAX_STEPS) {
+            //////////////////////////////////
+            //
+            // FILL IN HERE !!!!!!!!!!!!!!!!!!
+            //
+            //////////////////////////////////
+            return true;
+        }
+    }
+    return false;
+}
+
+
+//bool MSequencer::selectSequenceType(SEQ_TYPE type)
+//{
+//    _selectedSequenceType = type;
+//    return true;
+//}
+
+
+bool MSequencer::selectSequenceType(int type)
+{
+    switch(type) {
+        case 0:
+            _selectedSequenceType = NOTE;
+            return true;
+        case 1:
+            _selectedSequenceType = VELOCITY;
+            return true;
+        case 2:
+            _selectedSequenceType = CCNUMBER;
+            return true;
+        case 3:
+            _selectedSequenceType = CCVALUE;
+            return true;
+        default:
+            return false;
+    }
 }
 
 
 
-// seq
+
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+/////////////////////////////////////// SEQ
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
 
 seq::seq(int id, SUBDIV subdiv, func_cb cb) : _id(id), _stopped(true)
 {
