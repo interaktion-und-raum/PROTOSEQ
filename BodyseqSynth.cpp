@@ -2075,33 +2075,27 @@ void MMidi::midiRealTimeHandler(uint8_t data) {
 
 void MMidi::clock()
 {
-	// quick hack to circumvent sequencer.
 	if(p_clockClickCallback != NULL){
 		(*p_clockClickCallback)();
 	}
-    Sequencer.clock();
 }
 
 
 void MMidi::start()
 {
-	// quick hack to circumvent sequencer.
 	if(p_clockStartCallback != NULL){
 		(*p_clockStartCallback)();
 	}
-    Sequencer.start();
 }
 
 
 void MMidi::continues()
 {
-        Sequencer.continues();
 }
 
 
 void MMidi::stop()
 {
-        Sequencer.stop();
 }
 
 
@@ -2419,7 +2413,6 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 			Music.sendInstrument();
 			break;
         case SEQ_INTERNAL_CLOCK:
-            Sequencer.setInternalClock(value);
             break;
         case SEQ_CLOCK_IN:
             setMidiClockIn(value);
@@ -2431,22 +2424,14 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
             setMidiClockOut(value);
             break;
         case SEQ_BPM:
-            Sequencer.setbpm(60 + value);
             break;
         case SEQ_SEQUENCE:
-            Sequencer.selectSequence(value);
             break;
         case SEQ_TYPE:
-            if(value == 1) Sequencer.selectSequenceType(1);
-            else if(value == 2) Sequencer.selectSequenceType(2);
-            else if(value == 3) Sequencer.selectSequenceType(3);
-            else Sequencer.selectSequenceType(0);
             break;
         case SEQ_INDEX:
-            Sequencer.selectIndex(value);
             break;
         case SEQ_VALUE:
-//            Sequencer.setValue(value);
             break;
         default:
 			break;
