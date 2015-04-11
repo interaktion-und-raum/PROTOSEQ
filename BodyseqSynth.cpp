@@ -2415,13 +2415,10 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
         case SEQ_INTERNAL_CLOCK:
             break;
         case SEQ_CLOCK_IN:
-            setMidiClockIn(value);
             break;
         case SEQ_CLOCK_THRU:
-            setMidiClockThru(value);
             break;
         case SEQ_CLOCK_OUT:
-            setMidiClockOut(value);
             break;
         case SEQ_BPM:
             break;
