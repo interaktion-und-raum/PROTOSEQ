@@ -27,6 +27,7 @@
 #include "MCP4251.h"
 #include <EEPROM.h>
 #include <Math.h>
+#include "Sequencer.h"
 
 #ifndef Synth_h // include guard
 #define Synth_h
@@ -261,6 +262,7 @@
 // MMusic class for handling sound engine
 
 class MMusic {
+    friend class MSequencer;
 public:
 	
 	// INITIALIZER
@@ -619,6 +621,7 @@ extern MMusic Music;
 // MMidi class for handling MIDI implementation
 
 class MMidi {
+    friend class MSequencer;
 public:
 	void init();
 	void checkSerialMidi();
