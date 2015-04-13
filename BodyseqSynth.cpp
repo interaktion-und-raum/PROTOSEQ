@@ -767,7 +767,7 @@ void MMusic::init()
 //	spi_setup();
 
 	// filter setup
-        setCutoff((uint16_t)BIT_16);
+    setCutoff((uint16_t)BIT_16);
 //	setCutoff(BIT_16);
 	setResonance(BIT_16);
     setFilterType(0);
