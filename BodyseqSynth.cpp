@@ -476,12 +476,17 @@ void MMusic::spi_setup()
 
 void MMusic::getPreset(uint8_t p)
 {
+    
+    const static int AO_CONTROL_MESSAGES = 40;
+    const static int AO_CONTROL_MESSAGES_MAX = 69;
+
 //	cli();
 	if(p < MAX_PRESETS) {
 //		Serial.print("GETTING PRESET NUMBER : ");
 //		Serial.println(p);
 		for(uint8_t i=2; i<128; i++) {
             if(i >= 80 && i < 100) continue;
+            if (i >= AO_CONTROL_MESSAGES && i < AO_CONTROL_MESSAGES_MAX) continue;
 			instrument[i] = userPresets[p][i];
 			Midi.controller(Midi.midiChannel, i, instrument[i]);
 //			Serial.println(userPresets[p][i]);
@@ -489,6 +494,7 @@ void MMusic::getPreset(uint8_t p)
 	} else {
 		for(uint8_t i=2; i<128; i++) {
             if(i >= 80 && i < 100) continue;
+            if (i >= AO_CONTROL_MESSAGES && i < AO_CONTROL_MESSAGES_MAX) continue;
 			instrument[i] = programPresets[(p-MAX_PRESETS)*PRESET_SIZE + i];
 			Midi.controller(Midi.midiChannel, i, instrument[i]);
 			//			Serial.println(userPresets[p][i]);
