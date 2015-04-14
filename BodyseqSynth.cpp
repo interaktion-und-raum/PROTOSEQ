@@ -2422,13 +2422,13 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 //            Sequencer.setInternalClock(value);
             break;
         case SEQ_CLOCK_IN:
-            setMidiClockIn(value);
+//            setMidiClockIn(value);
             break;
         case SEQ_CLOCK_THRU:
-            setMidiClockThru(value);
+//            setMidiClockThru(value);
             break;
         case SEQ_CLOCK_OUT:
-            setMidiClockOut(value);
+//            setMidiClockOut(value);
             break;
         case SEQ_BPM:
 //            Sequencer.setbpm(60 + value);
