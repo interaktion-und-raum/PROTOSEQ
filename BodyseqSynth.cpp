@@ -2138,9 +2138,18 @@ void MMidi::midiHandler() {
                     break;
                     
                 case 0xB0:
-                    controller		(midiBuffer[0] & 0x0F,   // midi channel 0-15
-                                     midiBuffer[1] & 0x7F, // controller number 0-127
-                                     midiBuffer[2] & 0x7F);// controller value 0-127
+                    if (p_controllerCallback != NULL) {
+                        (*p_controllerCallback)(
+                            midiBuffer[0] & 0x0F,
+                            midiBuffer[1] & 0x7F,
+                            midiBuffer[2] & 0x7F
+                        );
+                    }
+                    controller(
+                        midiBuffer[0] & 0x0F, // midi channel 0-15
+                        midiBuffer[1] & 0x7F, // controller number 0-127
+                        midiBuffer[2] & 0x7F  // controller value 0-127
+                    );
                     break;
                     
                 case 0xC0:
@@ -2199,10 +2208,6 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 	
 	if(value > 127) value = 127;
 	instrument[number] = value;
-
-	if( p_controllerCallback != NULL ) {
-		(*p_controllerCallback)( channel, number, value );
-	}
 	
 	switch(number) {
 		case IS_12_BIT:
