@@ -581,9 +581,9 @@ void MMusic::getRandomizedPreset(uint8_t p, uint8_t r)
 
 void MMusic::sendInstrument()
 {
-//	Serial.print("SENDING PRESET NUMBER : ");
-//	Serial.print(p);
-//	Serial.println(" OVER MIDI");
+	Serial.print("SENDING CURRENT INSTRUMENT ");
+	Serial.print(" OVER MIDI on channel ");
+    Serial.println(Midi.midiChannel+1);
 	cli();
 	for(uint8_t i=2; i<128; i++) {
 		usbMIDI.sendControlChange(i, instrument[i], Midi.midiChannel+1);
@@ -1798,9 +1798,9 @@ void MMidi::init()
     setMidiClockOut(true);
     
 	midiBufferIndex = 0;
-	midiChannel = 0;
+	midiChannel = MIDI_CHANNEL - 1;
     midiRead = false;
-    Serial.println("MIDI intialised on channel 1. Use Midi.setChannel(channel) to set to other channel");
+//    Serial.println("MIDI intialised on channel 1. Use Midi.setChannel(channel) to set to other channel");
 }
 
 void MMidi::setClockTickCallback( void (*pClockClickCallback)(void) ){
@@ -2380,8 +2380,8 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 			Music.setFM3Shape(value);
 			break;
 		case ENV1_ENABLE:
-//			if(value<64) Music.enableEnvelope1();
-//			else Music.disableEnvelope1();
+			if(value) Music.enableEnvelope1();
+			else Music.disableEnvelope1();
 			break;
 		case ENV1_ATTACK:
 			Music.setEnv1Attack(value);
@@ -2396,8 +2396,8 @@ void MMidi::controller(uint8_t channel, uint8_t number, uint8_t value) {
 			Music.setEnv1Release(value);
 			break;
 		case ENV2_ENABLE:
-//			if(value<64) Music.enableEnvelope2();
-//			else Music.disableEnvelope2();
+			if(value) Music.enableEnvelope2();
+			else Music.disableEnvelope2();
 			break;
 		case ENV2_ATTACK:
 			Music.setEnv2Attack(value);
